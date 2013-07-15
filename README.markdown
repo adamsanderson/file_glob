@@ -3,7 +3,7 @@ FileGlob
 
 Quacks like a Regexp, tastes like Dir.glob.
 
-Use this with any library that expects a regular expression.  For instance, the `listen` gem normally checks file paths against a regular expression.  You can use a FileGlob instead to define a more natural matcher.
+Use FileGlob in place of a Regexp when [shell pattern matching ](http://www.ruby-doc.org/core-1.9.3/File.html#method-c-fnmatch) makes more sense.
 
 Usage 
 -----
