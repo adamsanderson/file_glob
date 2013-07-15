@@ -1,32 +1,32 @@
-require "minitest/autorun"
-require_relative "../lib/file_glob"
-
-# These tests minimal verify the interface of FileGlob.
+# These tests minimaly verify the interface of a "matcher" object.
 # They ensure that it behaves like a regexp for matching purposes.
 # 
 # For tests around behavior, see file_glob_test.rb
 #
-class InterfaceTest < MiniTest::Unit::TestCase
-  MATCH = "file.rb"
+module MatcherMixin
   
   def setup
-    @glob = FileGlob.new '*.rb'
+    raise NotImplementedError.new "Setup must define @matcher"
+  end
+  
+  def matching_example
+    raise NotImplementedError.new "Provide a string that matches @matcher"
   end
   
   def test_responds_to_matching_methods
-    assert @glob.respond_to? :"=~"
-    assert @glob.respond_to? :match
-    assert @glob.respond_to? :"==="
+    assert @matcher.respond_to? :"=~"
+    assert @matcher.respond_to? :match
+    assert @matcher.respond_to? :"==="
   end
   
   def test_squiggle_operator_returns_an_index
-    i = @glob =~ MATCH
+    i = @matcher =~ matching_example
     
     assert_kind_of Fixnum, i
   end
   
   def test_match_returns_a_match_data_like_object
-    data = @glob.match(MATCH)
+    data = @matcher.match(matching_example)
     
     assert data.respond_to? :[]
     assert data.respond_to? :string
